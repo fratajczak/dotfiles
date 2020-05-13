@@ -1,0 +1,369 @@
+;*********************************************************
+;
+;                          COLORS
+;
+;**********************************************************
+
+[colors]
+; Base colors from .Xresources
+bg        =   ${xrdb:background}
+bg-alt    =   #{xrdb:color0}
+fg        =   ${xrdb:foreground}
+fg-alt    =   ${xrdb:color8}
+red       =   ${xrdb:color1}
+green     =   ${xrdb:color2}
+yellow    =   ${xrdb:color3}
+blue      =   ${xrdb:color4}
+blue-alt  =   ${xrdb:color12}
+magenta   =   ${xrdb:color5}
+cyan      =   ${xrdb:color6}
+white     =   ${xrdb:color15}
+
+;[colors]
+gray = #585858
+black = #090909
+;blue = #95aec7
+;yellow = #c7ae95
+
+background-alt = #3C5A46
+background-unf = #2E463E
+background-mod0 = #3C5A46
+background-mod1 = #546E53
+background-mod2 = #708963
+background-alrt = #A1BB76
+foreground = #F3F3BA
+foreground-alt = #F3F3BA
+primary = #F3F3BA
+secondary = #F3F3BA
+
+;**********************************************************
+;
+;                       GLOBAL WM SETTINGS
+;
+;**********************************************************
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+;*********************************************************
+;
+;                       BAR SETTINGS I3
+;
+;********************************************************
+
+[bar/top]
+separator = 
+monitor = ${env:MONITOR:HDMI-A-1}
+bottom = false
+;width = 1800
+width = 100%
+height = 30
+offset-x = 8
+offset-y = 8
+margin-left = 8
+margin-right = 8
+
+#override-redirect = true
+wm-restack = i3
+
+enable-ipc = true
+;dock = true
+
+background = ${colors.bg}
+foreground = ${colors.fg}
+
+;border-bottom-size = 1
+;border-top-size = 1
+;border-top-color = ${colors.fg}
+;border-bottom-color = ${colors.fg}
+;border-left-size = 1
+;border-left-color = ${colors.fg}
+;border-right-size = 1
+;border-right-color = ${colors.fg}
+
+spacing = 0
+padding-left = 2
+padding-right = 2
+module-margin-left = 0
+module-margin-right = 0
+
+;font-0 = Dina:size=6:antialias=false;1
+;font-1 = Siji:antialias=false;1
+font-0 = FiraMono Nerd Font:size=10:style=Medium:antialias=true;3
+font-1 = FiraMono Nerd Font:size=10:style=Medium:antialias=true;3
+font-2 = FiraMono Nerd Font:size=10:style=Medium:antialias=true;3
+
+;modules-left = menu i3 mpd
+;modules-center = date
+;modules-right = uptime mail temperature cpu memory wlan battery power-label
+
+modules-left = i3 
+modules-center = spotify playpause next
+modules-right = wlan volume date menu0
+
+;underline-size = 2
+;underline-color = ${colors.white}
+
+;tray-position =hidden
+;tray-padding = 11
+;tray-transparent = true
+;tray-offset-y = 22
+;tray-offset-x = -0
+;tray-maxsize = 18
+;tray-detached = true
+
+
+;**********************************************************
+;
+;                   MODULES SETTINGS
+;
+;**********************************************************
+
+[module/xwindow]
+type = internal/xwindow
+label = %title%
+label-maxlen = 30
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+;mount-1 = /home
+;mount-2 = /invalid/mountpoint
+
+label-mounted =  %free%
+label-mounted-underline = ${colors.white}
+label-mounted-padding = 1
+
+label-unmounted =
+label-unmounted-foreground = ${colors.black}
+
+[module/i3]
+type = internal/i3
+format = <label-mode> <label-state>
+index-sort = true
+
+label-focused-font = 4
+label-unfocused-font = 4
+label-urgent-font = 4
+label-visible-font = 4
+
+label-focused = 
+;label-focused = %index%
+;label-focused-background = ${colors.gray}
+label-focused-padding = 1
+
+label-unfocused = 
+;label-unfocused = %index%
+label-unfocused-padding = 1
+;label-unfocused-background = ${colors.black}
+label-unfocused-underlinde = ${colors.white}
+
+label-urgent = 
+;label-urgent = %index%!
+;label-urgent-background = ${colors.red}
+label-urgent-padding = 1
+label-urgent-foreground = ${colors.red}
+
+label-visible = 
+;label-visible = %index%
+label-visible-foreground = ${colors.white}
+label-visible-padding = 1
+
+[module/mpd]
+type = internal/mpd
+
+host = 127.0.0.1
+port = 6600
+
+intervel = 2
+
+format-online = <label-song>   <icon-prev> <icon-play> <icon-stop> <icon-pause> <icon-next>
+format-offline = <label-offline>
+
+label-offline =  no music
+label-offline-foreground = ${colors.gray}
+
+label-song = %artist% - %title%
+label-song-maxlen = 95
+label-song-ellipsis = true
+;label-song-foreground = ${colors.green}
+
+icon-prev  = 
+icon-next  = 
+icon-seekb = 
+icon-seekf = 
+icon-stop  = 
+icon-pause = 
+icon-play  = 
+
+icon-random = S
+icon-repeat = R
+
+toggle-on-foreground = #e60053
+toggle-off-foreground = #66
+
+[module/cpu]
+format-label = internal/cpu
+
+format = <label>
+
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
+ramp-coreload-underline = ${colors.white}
+
+type = internal/cpu
+interval = 2
+label = %{F${colors.white}  %percentage% %{F-}
+label-underline = ${colors.white}
+padding= 2
+
+
+[module/memory]
+type = internal/memory
+interval = 2
+
+label = %{F${colors.white}  %percentage_used% %{F-}
+label-underline = ${colors.white}
+label-foreground = ${colors.white}
+
+[module/wlan]
+type = internal/network
+interface = wlp6s0
+interval = 3.0
+
+format-connected = <label-connected>
+format-connected-underline = ${colors.white}
+format-disconnected-underline = ${colors.gray}
+
+label-connected = " %essid% " 
+label-disconnected = "  "
+label-disconnected-foreground = ${colors.red}
+
+
+[module/eth]
+type = internal/network
+interface = enp3s0
+interval = 3.0
+
+format-connected-padding = 1
+format-disconnected-padding = 1
+
+format-connected-underline = ${colors.white}
+format-disconnected-underline = ${colors.gray}
+
+label-connected = 
+label-disconnected = 
+label-disconnected-foreground = ${colors.gray}
+
+
+[module/date]
+type = internal/date
+date =  "%H:%M | "
+date-alt =  "%a %d-%m-%Y %H:%M | "
+interval = 5
+format-underline = ${colors.white}
+;format-background = ${colors.black}
+format-foreground = ${colors.fg}
+
+
+[module/volume]
+type = internal/pulseaudio
+
+format-volume =  | <ramp-volume> <label-volume>
+
+format-volume-padding = 0
+ramp-volume-foreground = ${colors.fg}
+label-volume = "%percentage%% | "
+
+label-muted = x
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 65
+
+format = <label>
+format-underline = ${colors.white}
+format-warn = <label-warn>
+format-warn-underline = ${colors.red}
+
+format-padding = 1
+format-warn-padidng = 1
+
+label =  %temperature%
+label-warn =  %temperature%
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = #55
+
+
+[module/menu0]
+type = custom/menu
+
+format = <label-toggle> <menu>
+format-underline = ${colors.white}
+
+menu-0-0 =  " shutdown "
+menu-0-0-exec = shutdown now
+menu-0-1 =  " restart "
+menu-0-1-exec = shutdown -r now
+;menu-0-2 =  " logout"
+;menu-0-2-exec = logout
+menu-0-2 =   cancel
+
+label-open =  ""
+label-close =
+
+[module/pogoda]
+type = custom/script
+interval = 10
+format = "<label>  "
+format-prefix = " "
+format-prefix-foreground = #695742
+;format-underline = #c38159
+exec = ~/.config/polybar/pogoda
+
+[module/spotify]
+type = custom/script
+exec = echo " " $(python3 ~/.config/polybar/scripts/spotify/spotify_status.py 2>&-)  "|   "
+format-underline = #1db954
+interval = 5
+format = <label>
+click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotifyd /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
+; [i3wm only] - Uncomment the below line to focus on Spotify when clicking on the song name (credits to https://github.com/Esya)
+; click-left = i3-msg '[class="Spotify"] focus'
+
+[module/next]
+type = custom/script
+interval = 86400
+format = "%{T3}<label>"
+; Next song icon
+exec = echo "  "
+; Check if spotify is running before displaying the icon
+format-underline = #1db954
+click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotifyd /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+
+[module/playpause]
+type = custom/script
+; Default
+initial = 1
+exec = echo "  "
+format-underline = #1db954
+click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotifyd /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+

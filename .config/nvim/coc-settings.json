@@ -1,0 +1,12 @@
+{
+	"rust-analyzer.inlayHints.chainingHints": false,
+	"rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
+	"languageserver": 
+	{
+		"clangd": {
+			"command": "clangd",
+			"rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+			"filetypes": ["c", "cpp", "objc", "objcpp"]
+		}
+	}
+}
