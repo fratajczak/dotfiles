@@ -74,6 +74,8 @@ function fish_prompt --description 'Write out the prompt'
         set __fish_color_status (set_color -o red)
     end
 
+set -l realhome ~
+set -l shortpwd (string replace -r '^'"$realhome"'($|/)' '~$1' $PWD)
     switch "$USER"
 
         case root toor
@@ -86,7 +88,7 @@ function fish_prompt --description 'Write out the prompt'
                 end
             end
 
-            printf '%s@%s %s%s%s# ' $USER (prompt_hostname) "$__fish_prompt_cwd" (prompt_pwd) "$__fish_prompt_normal"
+            printf '%s@%s %s%s%s# ' $USER (prompt_hostname) "$__fish_prompt_cwd" "$shortpwd" "$__fish_prompt_normal"
 
         case '*'
 
@@ -94,7 +96,7 @@ function fish_prompt --description 'Write out the prompt'
                 set -g __fish_prompt_cwd (set_color $fish_color_cwd)
             end
 
-            printf '[%s] %s%s@%s %s%s %s(%s)%s' (date "+%H:%M:%S") "$__fish_color_blue" $USER (prompt_hostname) "$__fish_prompt_cwd" "$PWD" "$__fish_color_status" "$stat" "$__fish_prompt_normal"
+            printf '[%s] %s%s@%s %s%s %s(%s)%s' (date "+%H:%M:%S") "$__fish_color_blue" $USER (prompt_hostname) "$__fish_prompt_cwd" "$shortpwd" "$__fish_color_status" "$stat" "$__fish_prompt_normal"
 
     end
 	printf '%s\f\r%s-> %% ' (__fish_vcs_prompt) "$__fish_color_blue"

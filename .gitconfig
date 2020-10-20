@@ -1,3 +1,9 @@
 [user]
 	email = fe.ratajczak@gmail.com
 	name = Ferdinand Ratajczak
+[diff]
+	algorithm = histogram
+[credential]
+	helper = cache --timeout 86400
+[pull]
+	rebase = true

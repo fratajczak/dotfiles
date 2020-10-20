@@ -10,8 +10,7 @@ tnoremap kj <c-\><c-n>
 inoremap kj <esc>
 set splitbelow
 set splitright
-set tabstop=4
-set shiftwidth=4 
+set tabstop=4 shiftwidth=4
 
 set winwidth=86 "Set minimum width of current window to 86
 autocmd WinEnter * wincmd = "and make other windows have equal size
@@ -74,23 +73,22 @@ match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$' "highlight git conflict markers
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'tpope/vim-surround'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'airblade/vim-gitgutter'
-Plug 'sheerun/vim-polyglot'
-Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-startify'
 Plug 'yegappan/mru'
 Plug 'fratajczak/vim-operator-highlight'
 Plug 'chrisbra/Colorizer'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'psliwka/vim-smoothie'
 Plug 'haya14busa/incsearch.vim'
 Plug '~/.brew/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'unblevable/quick-scope'
-Plug 'pandark/42header.vim'
+Plug 'fratajczak/42header.vim'
 Plug 'tmsvg/pear-tree'
 Plug 'vim-airline/vim-airline'
 Plug 'drewtempelmeyer/palenight.vim'
@@ -98,6 +96,13 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'ryanoasis/vim-devicons'
 Plug 'christoomey/vim-conflicted'
 Plug 'sodapopcan/vim-twiggy'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'puremourning/vimspector'
+Plug 'fratajczak/one-monokai-vim'
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/telescope.nvim'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 call plug#end()
 
@@ -107,7 +112,7 @@ augroup qs_colors
 	autocmd ColorScheme * highlight QuickScopeSecondary guifg='#98C379' gui=underline ctermfg=81 cterm=underline
 augroup END
 
-""set termguicolors
+set termguicolors
 set background=dark
 colorscheme palenight
 let g:airline_theme = 'palenight'
@@ -204,8 +209,7 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Use K to show documentation in preview window.
-nnoremap <leader>d  :call <SID>show_documentation()<CR>
+nmap <leader>R <Plug>(coc-rename)
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -215,10 +219,30 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Symbol renaming.
-nmap <leader>n <Plug>(coc-rename)
-
-xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap if <Plug>(coc-funcobj-i)
-omap af <Plug>(coc-funcobj-a)
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "+",
+      node_decremental = "_",
+    },
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+  },
+}
+EOF
